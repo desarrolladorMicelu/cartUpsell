@@ -1,0 +1,487 @@
+/* =====================================================================
+   Micelu - Popup de Productos Sugeridos · v1.2
+   Paleta: azul Micelu #4361ee
+   ===================================================================== */
+
+.micelu-cup-overlay {
+	--cup-blue:        #4361ee;
+	--cup-blue-dark:   #3451d1;
+	--cup-blue-light:  #eef1fd;
+	--cup-success:     #2fb344;
+	--cup-radius:      12px;
+	--cup-radius-sm:   6px;
+
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	background: rgba(15, 23, 60, 0.55);
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	box-sizing: border-box;
+}
+
+.micelu-cup-overlay.is-open {
+	display: flex;
+}
+
+/* ── Modal ─────────────────────────────────────────────────────────── */
+.micelu-cup-modal {
+	background: #fff;
+	width: 100%;
+	max-width: 640px;
+	max-height: 88vh;
+	overflow-y: auto;
+	border-radius: var(--cup-radius);
+	position: relative;
+	padding: 20px 22px 16px;
+	box-sizing: border-box;
+	box-shadow: 0 16px 48px rgba(15, 23, 60, 0.25);
+}
+
+/* ── Botón cerrar ───────────────────────────────────────────────────── */
+.micelu-cup-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 28px;
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f3f4f6;
+	border: none;
+	border-radius: 50%;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	color: #6b7280;
+	padding: 0;
+	transition: background 0.15s, color 0.15s;
+}
+
+.micelu-cup-close:hover {
+	background: var(--cup-blue);
+	color: #fff;
+}
+
+/* ── Cabecera ───────────────────────────────────────────────────────── */
+.micelu-cup-header {
+	padding-right: 34px;
+	margin-bottom: 14px;
+}
+
+.micelu-cup-header h3 {
+	margin: 0 0 2px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.micelu-cup-header p {
+	margin: 0;
+	color: #6b7280;
+	font-size: 12.5px;
+}
+
+/* ── Loader ─────────────────────────────────────────────────────────── */
+.micelu-cup-loader {
+	text-align: center;
+	padding: 24px 0;
+	color: #9ca3af;
+	font-size: 12px;
+}
+
+/* ── Grid de tarjetas ───────────────────────────────────────────────── */
+.micelu-cup-products-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+	gap: 10px;
+}
+
+/* ── Tarjeta ────────────────────────────────────────────────────────── */
+.micelu-cup-product-card {
+	border: 1px solid #e5e7eb;
+	border-radius: var(--cup-radius);
+	padding: 10px 10px 12px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.micelu-cup-product-card:hover {
+	border-color: var(--cup-blue);
+	box-shadow: 0 2px 12px rgba(67, 97, 238, 0.08);
+}
+
+/* ── Imagen ─────────────────────────────────────────────────────────── */
+.micelu-cup-product-image {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 6px;
+	flex: 1;
+}
+
+.micelu-cup-product-image img {
+	width: 100%;
+	max-width: 100px;
+	height: auto;
+	max-height: 110px;
+	border-radius: var(--cup-radius-sm);
+	object-fit: contain;
+}
+
+/* ── Nombre ─────────────────────────────────────────────────────────── */
+.micelu-cup-product-name {
+	font-size: 11.5px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #1f2937;
+	margin-bottom: 6px;
+	width: 100%;
+}
+
+/* ── Formulario de variaciones ──────────────────────────────────────── */
+.micelu-cup-variations-form {
+	width: 100%;
+}
+
+.micelu-cup-variations-form table.variations,
+.micelu-cup-variations-form table.variations tbody,
+.micelu-cup-variations-form table.variations tr,
+.micelu-cup-variations-form table.variations td {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.micelu-cup-variations-form table.variations {
+	margin: 0 0 6px;
+	border: none;
+	background: transparent;
+}
+
+.micelu-cup-variations-form table.variations tr {
+	margin-bottom: 4px;
+	border: none;
+	background: transparent;
+}
+
+.micelu-cup-variations-form table.variations td {
+	border: none;
+	padding: 0;
+	background: transparent;
+}
+
+.micelu-cup-variations-form table.variations td.label {
+	text-align: left;
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	color: #1f2937;
+	padding-bottom: 2px;
+}
+
+.micelu-cup-variations-form table.variations td.label label {
+	font-size: 10px !important;
+	font-weight: 600 !important;
+	text-transform: uppercase !important;
+	color: #1f2937 !important;
+	letter-spacing: 0.3px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.micelu-cup-variations-form table.variations td.value {
+	padding: 0;
+}
+
+/* Select nativo de fallback */
+.micelu-cup-variations-form table.variations td.value select {
+	width: 100%;
+	font-size: 11px;
+	border: 1px solid #e5e7eb;
+	border-radius: var(--cup-radius-sm);
+	padding: 4px 6px;
+	background: #f9fafb;
+	color: #374151;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.micelu-cup-variations-form table.variations td.value select:focus {
+	outline: none;
+	border-color: var(--cup-blue);
+}
+
+/* ── Swatches: ajustes compactos ────────────────────────────────────── */
+.micelu-cup-variations-form .variable-items-wrapper {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 4px !important;
+	justify-content: flex-start !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.micelu-cup-variations-form .variable-item {
+	min-width: 24px !important;
+	min-height: 24px !important;
+	width: auto !important;
+	height: auto !important;
+	font-size: 10px !important;
+	border-radius: 4px !important;
+	margin: 0 !important;
+}
+
+.micelu-cup-variations-form .variable-item.button-variable-item {
+	padding: 2px 6px !important;
+	font-size: 10px !important;
+	line-height: 1.4 !important;
+	min-height: 22px !important;
+	border-radius: 4px !important;
+	background-color: #fff !important;
+	color: #374151 !important;
+	border: 1px solid #d1d5db !important;
+}
+
+/* Swatch de botón seleccionado: fondo azul sólido */
+.micelu-cup-variations-form .variable-item.button-variable-item.selected {
+	background-color: var(--cup-blue) !important;
+	color: #fff !important;
+	border-color: var(--cup-blue) !important;
+}
+
+.micelu-cup-variations-form .variable-item.button-variable-item:hover:not(.selected) {
+	border-color: #9ca3af !important;
+	background-color: #f9fafb !important;
+	color: #374151 !important;
+}
+
+.micelu-cup-variations-form .variable-item.color-variable-item {
+	width: 22px !important;
+	height: 22px !important;
+	min-width: 22px !important;
+	min-height: 22px !important;
+	border-radius: 4px !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+/* Swatch de color seleccionado: borde azul */
+.micelu-cup-variations-form .variable-item.color-variable-item.selected {
+	border-color: var(--cup-blue) !important;
+	box-shadow: 0 0 0 2px var(--cup-blue) !important;
+	outline: none !important;
+}
+
+.micelu-cup-variations-form .variable-item.color-variable-item:hover:not(.selected) {
+	border-color: #9ca3af !important;
+	box-shadow: none !important;
+}
+
+.micelu-cup-variations-form .variable-item.image-variable-item {
+	width: 26px !important;
+	height: 26px !important;
+	min-width: 26px !important;
+	min-height: 26px !important;
+	border-radius: 4px !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+/* Swatch de imagen seleccionado: borde azul */
+.micelu-cup-variations-form .variable-item.image-variable-item.selected {
+	border-color: var(--cup-blue) !important;
+	box-shadow: 0 0 0 2px var(--cup-blue) !important;
+	outline: none !important;
+}
+
+.micelu-cup-variations-form .variable-item.image-variable-item:hover:not(.selected) {
+	border-color: #9ca3af !important;
+	box-shadow: none !important;
+}
+
+/* Oculta el bloque de precio/stock nativo del variations_form */
+.micelu-cup-variations-form .single_variation_wrap {
+	display: none !important;
+}
+
+/* ── Precio ─────────────────────────────────────────────────────────── */
+.micelu-cup-product-price {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	color: #111827;
+	text-align: center;
+	font-size: 13px;
+}
+
+.micelu-cup-product-price del {
+	font-size: 10px;
+	font-weight: 400;
+	color: #9ca3af;
+	text-decoration: line-through;
+	margin-right: 3px;
+}
+
+.micelu-cup-product-price ins {
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 13px;
+	color: var(--cup-blue);
+}
+
+.micelu-cup-product-price > .woocommerce-Price-amount,
+.micelu-cup-product-price span.price > .woocommerce-Price-amount {
+	font-weight: 700;
+	font-size: 13px;
+	color: var(--cup-blue);
+}
+
+.micelu-cup-product-price span.price {
+	display: block;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--cup-blue);
+}
+
+.micelu-cup-product-price span.price del {
+	display: inline !important;
+	font-size: 10px;
+	font-weight: 400;
+	color: #9ca3af;
+	text-decoration: line-through;
+	margin-right: 3px;
+}
+
+.micelu-cup-product-price span.price ins {
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 13px;
+	color: var(--cup-blue);
+}
+
+/* ── Botón agregar ──────────────────────────────────────────────────── */
+.micelu-cup-add-btn {
+	width: 100%;
+	font-size: 11.5px;
+	padding: 7px 8px;
+	margin-top: 0;
+	border-radius: var(--cup-radius-sm) !important;
+	border: none !important;
+	background: var(--cup-blue) !important;
+	color: #fff !important;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.12s;
+	letter-spacing: 0.1px;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.micelu-cup-add-btn:hover:not(:disabled) {
+	background: var(--cup-blue-dark) !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.micelu-cup-add-btn:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.micelu-cup-add-btn:disabled {
+	background: #f3f4f6 !important;
+	color: #9ca3af !important;
+	cursor: not-allowed;
+	opacity: 1;
+}
+
+.micelu-cup-add-btn.is-added {
+	background: var(--cup-success) !important;
+	color: #fff !important;
+	cursor: default;
+	font-size: 11.5px !important;
+	padding: 7px 8px !important;
+}
+
+/* Ocultar el "Ver carrito" que WooCommerce inyecta después de agregar */
+.micelu-cup-product-card .added_to_cart,
+.micelu-cup-product-card a.added_to_cart {
+	display: none !important;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+.micelu-cup-footer {
+	margin-top: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	border-top: 1px solid #f1f3f8;
+	padding-top: 12px;
+}
+
+.micelu-cup-footer-note {
+	font-size: 11px;
+	color: #9ca3af;
+}
+
+.micelu-cup-continue {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	text-decoration: none;
+	background: var(--cup-blue);
+	color: #fff !important;
+	border: none;
+	border-radius: var(--cup-radius-sm);
+	padding: 9px 18px;
+	font-weight: 600;
+	font-size: 12.5px;
+	transition: background 0.12s;
+	white-space: nowrap;
+}
+
+.micelu-cup-continue:hover {
+	background: var(--cup-blue-dark);
+	color: #fff !important;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.micelu-cup-modal {
+		padding: 16px 14px 14px;
+	}
+
+	.micelu-cup-products-grid {
+		grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+		gap: 8px;
+	}
+
+	.micelu-cup-footer {
+		flex-direction: column;
+		align-items: stretch;
+		text-align: center;
+	}
+
+	.micelu-cup-continue {
+		width: 100%;
+		justify-content: center;
+		padding: 10px 10px;
+	}
+
+	.micelu-cup-footer-note {
+		display: none;
+	}
+}
